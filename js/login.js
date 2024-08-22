@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', funcion(e){
         if (usuario===null || contraseña===null){
             alert ("Debe iniciar sesión para continuar");
         }else{
-            localStorage.setItem("user",usuario);
+            localStorage.setItem("user", JSON.stringify(usuario:inputEmail.value));
             location.href="index.html";
              } 
     })
