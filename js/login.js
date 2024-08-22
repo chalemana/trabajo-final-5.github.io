@@ -1,14 +1,15 @@
-document.addEventListener('DOMContentLoaded', funcion(e){
-   
-    document.getElementById('submitBtn').addEventListener('click',()=> {
-        let usuario =document.getElementById('inputEmail').value;
-        let contraseña=document.getElementById('inputPassword').value;
-    
-        if (usuario===null || contraseña===null){
-            alert ("Debe iniciar sesión para continuar");
-        }else{
-            localStorage.setItem("user", JSON.stringify(usuario:inputEmail.value));
-            location.href="index.html";
-             } 
-    })
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('submit').addEventListener('click', (event) => {
+        event.preventDefault();
+        let usuario = document.getElementById('inputEmail').value;
+        let contraseña = document.getElementById('inputPassword').value;
+
+        if (usuario === "" || contraseña === "") {
+            alert("Debe iniciar sesión para continuar");
+        } else {
+            localStorage.setItem("user", usuario); 
+            location.href = "index.html";
+        }
     });
+});
+
