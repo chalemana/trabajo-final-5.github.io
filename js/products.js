@@ -3,9 +3,9 @@ const AUTO_URL = "https://japceibal.github.io/emercado-api/cats_products/101.jso
 const container = document.getElementById("container");
 
 function showData(productsArray) {
-    let htmlContent = '';
+    let Content = '';
     for (const product of productsArray) {
-        htmlContent += `
+        Content += `
             <tr>
                 <td><img src="${product.image}" alt="Imagen del Producto"></td>
                 <td>
@@ -16,13 +16,13 @@ function showData(productsArray) {
                 </td>
             </tr>`;
     }
-    container.innerHTML = htmlContent;
+    container.innerHTML = Content;
 }
 
 fetch(AUTO_URL)
     .then(response => response.json())
     .then(data => {
-        showData(data.products); // Accede a `data.products` si el array está dentro de `products`
+        showData(data.products); 
     })
     .catch(error => {
         console.error('Error con fetch', error);
