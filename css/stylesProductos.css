@@ -1,0 +1,55 @@
+#tablaProducts h4{
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    color: #A0D9CE;
+    font-size: 3em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+#productsAuto{
+    padding: 15px;
+    background-color: #F2F2F2;
+    color: #38373C;
+    text-align: left;
+}
+
+table {
+    width: 100%;
+    margin: 20px auto; 
+    border-collapse: collapse;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+td {
+    padding: 15px;
+    vertical-align: top;
+    border-bottom: 2px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #EEEDE9;
+}
+
+tr:hover {
+    background-color: #A0D9CE;
+    cursor: pointer;
+}
+
+img {
+    max-width: 250px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.descripcion {
+    /* border-bottom: 1px solid #ddd; */
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
