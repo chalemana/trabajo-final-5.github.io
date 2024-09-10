@@ -36,7 +36,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .productContainer:hover {
-    background-color: #43776d;
+    background-color: #5a9589;
     color: #EEEDE9;
     cursor: pointer;
 }
