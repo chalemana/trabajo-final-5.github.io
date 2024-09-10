@@ -13,20 +13,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('soldCount').innerHTML = data.soldCount;
 
                 
-                // Configurar la imagen principal y miniaturas
+                
                 let imagenPrincipal = document.getElementById('imagenPrincipal');
                 let imagenMini = document.getElementById('imagenMini');
 
                 data.images.forEach((imgUrl, index) => {
                     if (index === 0) {
-                        imagenPrincipal.src = imgUrl; // La primera imagen es la principal por defecto
+                        imagenPrincipal.src = imgUrl; 
                     }
 
                     let miniaturaImg = document.createElement('img');
                     miniaturaImg.src = imgUrl;
                     miniaturaImg.alt = `Imagen ${index + 1}`;
                     miniaturaImg.addEventListener('click', () => {
-                        imagenPrincipal.src = imgUrl; // Cambiar la imagen principal al hacer clic en la miniatura
+                        imagenPrincipal.src = imgUrl; 
                     });
 
                     imagenMini.appendChild(miniaturaImg);

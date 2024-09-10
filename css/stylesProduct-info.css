@@ -1,7 +1,6 @@
 body {
     font-family: 'Verdana', serif;
-    background-color: #f8f9fa;
-    color: #333;
+    color: #38373C;
 }
 
 .product-info-container {
@@ -12,12 +11,12 @@ body {
     border: 1px solid #ddd;
     padding: 5px;
     text-align: center;
-    background-color: #fff;
+    background-color:   #EEEDE9;;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #imagenMini img {
-    border: 1px solid #ddd;
+    border: 1px solid   #EEEDE9;;
     margin-right: 5px;
     cursor: pointer;
     width: 80px;
@@ -31,10 +30,15 @@ body {
 }
 
 .productContainer{
-    background-color: #fff;
+    background-color: #EEEDE9;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.productContainer:hover {
+    background-color: #43776d;
+    color: #EEEDE9;
+    cursor: pointer;
 }
 
 .productContainer h2 {
@@ -52,5 +56,4 @@ body {
 .sold-count,
 .price { 
     font-size: 14px;
-    color: #555;
 }
