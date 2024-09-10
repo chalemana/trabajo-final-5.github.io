@@ -30,19 +30,19 @@ body {
     transform: scale(1.5);
 }
 
-.product-details {
+.productContainer{
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.product-details h2 {
+.productContainer h2 {
     font-size: 24px;
     margin-bottom: 15px;
 }
 
-.product-details p {
+.productContainer p {
     font-size: 16px;
     margin-bottom: 15px;
 }
