@@ -10,6 +10,7 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/stylesProduct-info.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,13 +37,34 @@
       </div>
     </div>
   </nav>
+  
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    
+    <div class="container product-info-container">
+      <div class="row">
+          <div class="col-md-6">
+            <div id="imagenPrincipalContainer">
+              <img id="imagenPrincipal" src="" class="img-fluid" alt="Imagen principal">
+          </div>
+          <div id="imagenMini">
+        </div>
     </div>
+    <div class="col-md-6">
+        
+        <div class="product-details">
+            <h2 id="productName">Nombre:</h2>
+            <p class="description"><strong>Descripción:</strong> <span id="productDescription"></span></p>
+            <p class="category"><strong>Categoría:</strong> <span id="productCategory"></span></p>
+            <p class="price"><strong>Precio:</strong> <span id="productPrice"></span></p>
+            <p class="sold-count"><strong>Cantidad Vendidos:</strong> <span id="soldCount">0</span></p>
+        </div>
+    </div>
+</div>
+</div>
+
+
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
