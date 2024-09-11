@@ -34,4 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(error => console.error('Error fetching products-info:', error));
     
+            document.getElementById('buyButton').addEventListener('click', () => {
+                alert('¡Producto añadido al carrito!');
+                location.href = 'categories.html';
+            });
 });

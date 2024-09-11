@@ -1,8 +1,17 @@
-body {
-    font-family: 'Verdana', serif;
-    color: #38373C;
-}
 
+#productName {
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    color: #38373C;
+    font-size: 2em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: #c6c6c3;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 .product-info-container {
     margin-top: 20px;
 }
