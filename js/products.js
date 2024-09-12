@@ -1,3 +1,4 @@
+
 let container = document.getElementById("container");
 
 function showData(productsArray) {
@@ -25,7 +26,6 @@ function selectProduct(productId) {
     location.href = 'product-info.html';
 }
 
-
     document.addEventListener('DOMContentLoaded', ()=>{
         var id = localStorage.getItem('catID'); 
         
@@ -41,4 +41,3 @@ function selectProduct(productId) {
                    console.error('Error al obtener los productos:', error);
                })
             } });
-
