@@ -44,3 +44,37 @@ function selectProduct(productId) {
         console.error('No se encontró un ID de categoría en localStorage');
     }
 });
+
+ searchInput.addEventListener('input', function () {
+        let productitos = filterProducts();
+        showData(productitos);
+    });
+    
+    /*
+    sortAscBtn.addEventListener('click', function () {
+        productsArray.sort((a, b) => a.year - b.year);
+        displayProducts(productsArray);
+    }); */
+    
+    
+   /*  sortDescBtn.addEventListener('click', function () {
+        productsArray.sort((a, b) => b.year - a.year);
+        displayProducts(productsArray);
+    });*/
+});
+
+const searchInput = document.getElementById('searchInput');
+const productList = document.getElementById('productList');
+/*const sortAscBtn = document.getElementById('sortAsc');
+const sortDescBtn = document.getElementById('sortDesc');
+*/
+let productsArray = [];
+
+
+function filterProducts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    return productsArray.filter(product =>
+        product.name.toLowerCase().startsWith(searchTerm)
+    );
+}
+
