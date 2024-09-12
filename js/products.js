@@ -29,15 +29,18 @@ function selectProduct(productId) {
     document.addEventListener('DOMContentLoaded', ()=>{
         var id = localStorage.getItem('catID'); 
         
-        if (id) {
-            let CAT_URL = "https://japceibal.github.io/emercado-api/cats_products/" + id + ".json";
-
-         fetch(CAT_URL)
-               .then(response => response.json())
-               .then(data => {
-                   showData(data.products);
-               })
-               .catch(error => {
-                   console.error('Error al obtener los productos:', error);
-               })
-            } });
+      if (id) {
+        let CAT_URL = "https://japceibal.github.io/emercado-api/cats_products/" + id + ".json";
+        
+        fetch(CAT_URL)
+            .then(response => response.json())
+            .then(data => {
+                showData(data.products);
+            })
+            .catch(error => {
+                console.error('Error al obtener los productos:', error);
+            });
+    } else {
+        console.error('No se encontró un ID de categoría en localStorage');
+    }
+});
