@@ -1,8 +1,13 @@
+body{
+  font-family: 'Quicksand', serif;
+}
+
+
 .jumbotron,
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
+  font-family: 'Quicksand', serif !important;
 }
 
 .jumbotron .display-4 {
@@ -21,6 +26,12 @@ nav a {
   -ms-user-select: none;
   user-select: none;
 }
+
+.lead{
+  font-family: 'Quicksand', serif;
+}
+
+
 
 @media (min-width: 768px) {
   .bd-placeholder-img-lg {

@@ -1,6 +1,6 @@
 const AUTO_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
 
-const container = document.getElementById("container");
+let container = document.getElementById("container");
 
 function showData(productsArray) {
     let Content = '';
@@ -14,9 +14,17 @@ function showData(productsArray) {
                     <div class="descripcion"><strong>Precio:</strong> ${product.cost + " " + product.currency}</div>
                     <div class="descripcion"><strong>Cantidad de Vendidos:</strong> ${product.soldCount}</div>
                 </td>
+                <td>
+                    <button class="btn btn-outline-secondary" onclick="selectProduct(${product.id})">+</button>
+                </td>
             </tr>`;
     }
     container.innerHTML = Content;
+}
+
+function selectProduct(productId) {
+    localStorage.setItem('selectProductId', productId);
+    location.href = 'product-info.html';
 }
 
 fetch(AUTO_URL)
@@ -25,5 +33,5 @@ fetch(AUTO_URL)
         showData(data.products); 
     })
     .catch(error => {
-        console.error('Error con fetch', error);
+        console.error('Error fetching products:', error);
     });
