@@ -26,17 +26,19 @@ function selectProduct(productId) {
 }
 
 
+    document.addEventListener('DOMContentLoaded', ()=>{
+        var id = localStorage.getItem('catID'); 
+        
+        if (id) {
+            let CAT_URL = "https://japceibal.github.io/emercado-api/cats_products/" + id + ".json";
 
-// pauta 1 entrega 3: //
- document.addEventListener('DOMContentLoaded'), ()=>{
- var id = localStorage.getItem('catID'); 
-    
-    fetch('https://japceibal.github.io/emercado-api/cats/'+ id + '.json')
-        .then(response => response.json())
-        .then(data => {
-            showData(data.products);
-        })
-        .catch(error => {
-            console.error('Error al obtener los productos:', error);
-        })
-}
+         fetch(CAT_URL)
+               .then(response => response.json())
+               .then(data => {
+                   showData(data.products);
+               })
+               .catch(error => {
+                   console.error('Error al obtener los productos:', error);
+               })
+            } });
+
