@@ -1,4 +1,3 @@
-const AUTO_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
 
 let container = document.getElementById("container");
 
@@ -27,11 +26,18 @@ function selectProduct(productId) {
     location.href = 'product-info.html';
 }
 
-fetch(AUTO_URL)
-    .then(response => response.json())
-    .then(data => {
-        showData(data.products); 
-    })
-    .catch(error => {
-        console.error('Error fetching products:', error);
-    });
+    document.addEventListener('DOMContentLoaded', ()=>{
+        var id = localStorage.getItem('catID'); 
+        
+        if (id) {
+            let CAT_URL = "https://japceibal.github.io/emercado-api/cats_products/" + id + ".json";
+
+         fetch(CAT_URL)
+               .then(response => response.json())
+               .then(data => {
+                   showData(data.products);
+               })
+               .catch(error => {
+                   console.error('Error al obtener los productos:', error);
+               })
+            } });
