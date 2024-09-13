@@ -1,5 +1,10 @@
+const container = document.getElementById("container");
+const searchInput = document.getElementById('searchInput');
+const productList = document.getElementById('productList');
+/*const sortAscBtn = document.getElementById('sortAsc');
+const sortDescBtn = document.getElementById('sortDesc');*/
 
-let container = document.getElementById("container");
+let productsArray = [];
 
 function showData(productsArray) {
     let Content = '';
@@ -26,16 +31,35 @@ function selectProduct(productId) {
     location.href = 'product-info.html';
 }
 
-    document.addEventListener('DOMContentLoaded', ()=>{
-        var id = localStorage.getItem('catID'); 
-        
-      if (id) {
-        let CAT_URL = "https://japceibal.github.io/emercado-api/cats_products/" + id + ".json";
+function filterProducts() {
+    const searchTerm = searchInput.value.toLowerCase();
+    return productsArray.filter(product =>
+        product.name.toLowerCase().startsWith(searchTerm)
+    );
+}
+
+/*function sortProducts(order) {
+    productsArray.sort((a, b) => {
+        if (order === 'asc') {
+            return a.cost - b.cost;
+        } else if (order === 'desc') {
+            return b.cost - a.cost;
+        }
+    });
+    showData(productsArray);
+} */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const id = localStorage.getItem('catID'); 
+    
+    if (id) {
+        const CAT_URL = `https://japceibal.github.io/emercado-api/cats_products/${id}.json`;
         
         fetch(CAT_URL)
             .then(response => response.json())
             .then(data => {
-                showData(data.products);
+                productsArray = data.products;
+                showData(productsArray);
             })
             .catch(error => {
                 console.error('Error al obtener los productos:', error);
@@ -45,36 +69,15 @@ function selectProduct(productId) {
     }
 });
 
- searchInput.addEventListener('input', function () {
-        let productitos = filterProducts();
-        showData(productitos);
-    });
-    
-    /*
-    sortAscBtn.addEventListener('click', function () {
-        productsArray.sort((a, b) => a.year - b.year);
-        displayProducts(productsArray);
-    }); */
-    
-    
-   /*  sortDescBtn.addEventListener('click', function () {
-        productsArray.sort((a, b) => b.year - a.year);
-        displayProducts(productsArray);
-    });*/
+searchInput.addEventListener('input', function () {
+    const filteredProducts = filterProducts();
+    showData(filteredProducts);
 });
 
-const searchInput = document.getElementById('searchInput');
-const productList = document.getElementById('productList');
-/*const sortAscBtn = document.getElementById('sortAsc');
-const sortDescBtn = document.getElementById('sortDesc');
-*/
-let productsArray = [];
+/*sortAscBtn.addEventListener('click', function () {
+    sortProducts('asc');
+});
 
-
-function filterProducts() {
-    const searchTerm = searchInput.value.toLowerCase();
-    return productsArray.filter(product =>
-        product.name.toLowerCase().startsWith(searchTerm)
-    );
-}
-
+sortDescBtn.addEventListener('click', function () {
+    sortProducts('desc');
+});*/
