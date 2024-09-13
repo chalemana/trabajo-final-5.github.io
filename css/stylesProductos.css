@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
 body{
-  font-family: 'Quicksand', serif;
+  font-family: "Quicksand", sans-serif;
 }
+
 #tablaProducts h4{
     text-align: center;
     margin: 20px 0;
