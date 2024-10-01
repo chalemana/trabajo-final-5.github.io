@@ -40,27 +40,54 @@
   
   <main>
     
-    <div class="container product-info-container">
+  <div class="container product-info-container">
       <h2 id="productName">Nombre:</h2>
       <div class="row">
           <div class="col-md-6">
             <div id="imagenPrincipalContainer">
               <img id="imagenPrincipal" src="" class="img-fluid" alt="Imagen principal">
+            </div>
+            <div id="imagenMini">
+            </div>
           </div>
-          <div id="imagenMini">
-        </div>
-    </div>
     <div class="col-md-6">
         <div class="productContainer">
+          <h3><strong>Descripción Producto</strong></h3>
             <p class="description"><strong>Descripción:</strong> <span id="productDescription"></span></p>
             <p class="category"><strong>Categoría:</strong> <span id="productCategory"></span></p>
             <p class="price"><strong>Precio:</strong> <span id="productPrice"></span></p>
             <p class="sold-count"><strong>Cantidad Vendidos:</strong> <span id="soldCount">0</span></p>
-            <button id="buyButton" class="btn btn-outline-secondary">Comprar</button>
+            <button id="buyButton" class="btn btn-outline-secondary btn-sm">Comprar</button>
         </div>
+
+        <div id="comentarioSeccion">
+          <h3><strong>Comentarios</strong></h3>
+          <div id="listaComentario">
+          </div>
+        </div>
+        <div id="clasControl">
+          <h3><strong>Calificar Producto</strong></h3>
+          <form>
+            <label class="estrellas">Calificación:</label>
+            <div id="clasificar">
+              <i class="fa fa-star star"></i>
+              <i class="fa fa-star star"></i>
+              <i class="fa fa-star star"></i>
+              <i class="fa fa-star star"></i>
+              <i class="fa fa-star star"></i>
+            </div>
+            <textarea id="comentario" placeholder="Deja tu comentario..."></textarea>
+            <button type="button" id="submitClas" class="btn btn-outline-secondary btn-sm">Enviar</button>
+          </form>
+        </div>
+
     </div>
-</div>
-</div>
+      </div>
+  </div>
+
+  
+
+
 
 
   </main>
@@ -84,6 +111,8 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>
+  <script src="js/checklogin.js"></script> 
+  <script src="js/login.js"></script> 
 </body>
 
 </html>
