@@ -1,92 +1,119 @@
 
-function convertirFecha(newFecha){
-    return newFecha.getDate()+ "/" + newFecha.getMonth()+ "/" + newFecha.getFullYear() + ",  " +  newFecha.getHours() + ":" + newFecha.getMinutes()+ ":" + newFecha.getSeconds();
+function convertirFecha(newFecha) {
+    return newFecha.getDate() + "/" + (newFecha.getMonth() + 1) + "/" + newFecha.getFullYear() + ", " + newFecha.getHours() + ":" + newFecha.getMinutes() + ":" + newFecha.getSeconds();
 }
 
+// Redirigir a la página del producto seleccionado
+function selectProduct(productId) {
+    localStorage.setItem('selectProductId', productId);
+    window.location.href = 'product-info.html';  
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     var productId = localStorage.getItem('selectProductId');
 
-    //Entrega3- mostrar el producto seleccionado con sus detalles e imgs
-        fetch("https://japceibal.github.io/emercado-api/products/" + productId + ".json")
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('productName').innerHTML = data.name;
-                document.getElementById('productDescription').innerHTML = data.description;
-                document.getElementById('productCategory').innerHTML = data.category;
-                document.getElementById('productPrice').innerHTML = data.cost + " " + data.currency
-                document.getElementById('soldCount').innerHTML = data.soldCount;
+    // Mostrar el producto seleccionado con sus detalles e imágenes
+    fetch("https://japceibal.github.io/emercado-api/products/" + productId + ".json")
+        .then(response => response.json())
+        .then(data => {
+            
+            document.getElementById('productName').innerHTML = data.name;
+            document.getElementById('productDescription').innerHTML = data.description;
+            document.getElementById('productCategory').innerHTML = data.category;
+            document.getElementById('productPrice').innerHTML = data.cost + " " + data.currency;
+            document.getElementById('soldCount').innerHTML = data.soldCount;
 
-                let imagenPrincipal = document.getElementById('imagenPrincipal');
-                let imagenMini = document.getElementById('imagenMini');
+            
+            let imagenPrincipal = document.getElementById('imagenPrincipal');
+            let imagenMini = document.getElementById('imagenMini');
 
-                data.images.forEach((imgUrl, index) => {
-                    if (index === 0) {
-                        imagenPrincipal.src = imgUrl; 
-                    }
+            data.images.forEach((imgUrl, index) => {
+                if (index === 0) {
+                    imagenPrincipal.src = imgUrl;
+                }
 
-                    let miniaturaImg = document.createElement('img');
-                    miniaturaImg.src = imgUrl;
-                    miniaturaImg.alt = `Imagen ${index + 1}`;
-                    miniaturaImg.addEventListener('click', () => {
-                        imagenPrincipal.src = imgUrl; 
-                    });
-
-                    imagenMini.appendChild(miniaturaImg);
+                let miniaturaImg = document.createElement('img');
+                miniaturaImg.src = imgUrl;
+                miniaturaImg.alt = `Imagen ${index + 1}`;
+                miniaturaImg.addEventListener('click', () => {
+                    imagenPrincipal.src = imgUrl;
                 });
-            })
-            .catch(error => console.error('Error fetching products-info:', error));
-    
-            document.getElementById('buyButton').addEventListener('click', () => {
-                alert('¡Producto añadido al carrito!');
-                location.href = 'categories.html';
+
+                imagenMini.appendChild(miniaturaImg);
             });
 
-//Entrega 4 - Parte 2 - mostrar lista de comemtarios ya realizados
-            fetch("https://japceibal.github.io/emercado-api/products_comments/" + productId + ".json")
-            .then(response => response.json())
-            .then(comentarios => {
-                let listaComentario = document.getElementById('listaComentario');
-                listaComentario.innerHTML = '';
-    
-                comentarios.forEach(comentario => {
-                    
-                    let stars = '';
+            // Mostrar productos relacionados
+            showproduRelacionados(data.relatedProducts);
+        })
+        .catch(error => console.error('Error al obtener la información del producto:', error));
 
-                    for (let i = 0; i < 5; i++) {
-                    if (i < comentario.score) {
-                    stars += '<i class="fa fa-star checked"></i>';
-                    } else {
-                    stars += '<i class="fa fa-star"></i>';
-                    }}
+    // Mostrar los comentarios realizados
+    fetch("https://japceibal.github.io/emercado-api/products_comments/" + productId + ".json")
+        .then(response => response.json())
+        .then(comentarios => {
+            let listaComentario = document.getElementById('listaComentario');
+            listaComentario.innerHTML = '';
 
-                    let fecha = comentario.dateTime;
-                    let newFecha = new Date (fecha);
-                    let nuevaFecha = convertirFecha(newFecha)
+            comentarios.forEach(comentario => {
+                let stars = '';
+                for (let i = 0; i < 5; i++) {
+                    stars += (i < comentario.score) ? '<i class="fa fa-star checked"></i>' : '<i class="fa fa-star"></i>';
+                }
 
-                    let comentItem = document.createElement('p');
-                    comentItem.innerHTML = `
-                        <strong>${comentario.user}</strong> (${nuevaFecha})<br>
-                        <em>Calificación:</em> ${stars}<br>
-                        <p>${comentario.description}</p>
-                    `;
-                    listaComentario.appendChild(comentItem);
-                });
-            })
-            .catch(error => console.error('Error comentarios de productos:', error));
+                let fecha = new Date(comentario.dateTime);
+                let nuevaFecha = convertirFecha(fecha);
+
+                let comentItem = document.createElement('p');
+                comentItem.innerHTML = `
+                    <strong>${comentario.user}</strong> (${nuevaFecha})<br>
+                    <em>Calificación:</em> ${stars}<br>
+                    <p>${comentario.description}</p>
+                `;
+                listaComentario.appendChild(comentItem);
+            });
+        })
+        .catch(error => console.error('Error al obtener los comentarios:', error));
+
+    // botón de compra
+    document.getElementById('buyButton').addEventListener('click', () => {
+        alert('¡Producto añadido al carrito!');
+        location.href = 'categories.html';
     });
-            
-            
-            
+});
 
 
-//Entrega 4 - Parte 3 y Desafiate - seccion para que el usuario clasifique y luego se agregue a la lista de comentariosya realizados
-let  estrellas = document.querySelectorAll('.star');
+    // Mostrar productos relacionados
+    function showproduRelacionados(produRelacionados) {
+        const produRelacionadosContainer = document.getElementById('produRelacionados');
+        produRelacionadosContainer.innerHTML = '';  // Limpiar contenido previo
+    
+        produRelacionados.forEach(produRelated => {
+            const produCard = `
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="${produRelated.image}" class="card-img-top" alt="${produRelated.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${produRelated.name}</h5>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="selectProduct(${produRelated.id})">Ver Producto</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            produRelacionadosContainer.innerHTML += produCard;
+        });
+    }
+    // Función para seleccionar un producto y redirigir
+    function selectProduct(productId) {
+        localStorage.setItem('selectProductId', productId);
+        location.reload(); 
+    };
 
-estrellas.forEach(function(estrella, index){
-    estrella.addEventListener('click', function(){
-
-        for (let i=0; i <= index; i++) {
+    
+// Clasificación por estrellas
+let estrellas = document.querySelectorAll('.star');
+estrellas.forEach(function(estrella, index) {
+    estrella.addEventListener('click', function() {
+        for (let i = 0; i <= index; i++) {
             estrellas[i].classList.add('checked');
         }
         for (let i = index + 1; i < estrellas.length; i++) {
@@ -95,19 +122,15 @@ estrellas.forEach(function(estrella, index){
     });
 });
 
-
+// Enviar el comentario con clasificación
 document.getElementById('submitClas').addEventListener('click', () => {
     let clasificar = document.querySelectorAll('.star.checked').length;
     let comentario = document.getElementById('comentario').value;
-    let usuario = localStorage.getItem('user') || 'usuario ';  
+    let usuario = localStorage.getItem('user') || 'usuario';
 
     let stars = '';
     for (let i = 0; i < 5; i++) {
-        if (i < clasificar) {
-            stars += '<i class="fa fa-star checked"></i>';
-        } else {
-            stars += '<i class="fa fa-star"></i>';
-        }
+        stars += (i < clasificar) ? '<i class="fa fa-star checked"></i>' : '<i class="fa fa-star"></i>';
     }
 
     let newComentarioHTML = `
