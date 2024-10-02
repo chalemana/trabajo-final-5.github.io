@@ -1,4 +1,5 @@
 
+// Convierte la Fecha a fecha latina(D/M/A, hora:min:sec), no de USA
 function convertirFecha(newFecha) {
     return newFecha.getDate() + "/" + (newFecha.getMonth() + 1) + "/" + newFecha.getFullYear() + ", " + newFecha.getHours() + ":" + newFecha.getMinutes() + ":" + newFecha.getSeconds();
 }
@@ -12,7 +13,7 @@ function selectProduct(productId) {
 document.addEventListener('DOMContentLoaded', () => {
     var productId = localStorage.getItem('selectProductId');
 
-    // Mostrar el producto seleccionado con sus detalles e imágenes
+    // Mostrar el producto con sus detalles e imágenes
     fetch("https://japceibal.github.io/emercado-api/products/" + productId + ".json")
         .then(response => response.json())
         .then(data => {
@@ -74,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error('Error al obtener los comentarios:', error));
 
-    // botón de compra
+    // botón de compra para un futuro 
     document.getElementById('buyButton').addEventListener('click', () => {
         alert('¡Producto añadido al carrito!');
         location.href = 'categories.html';
@@ -82,10 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-    // Mostrar productos relacionados
+    // Productos relacionados
     function showproduRelacionados(produRelacionados) {
         const produRelacionadosContainer = document.getElementById('produRelacionados');
-        produRelacionadosContainer.innerHTML = '';  // Limpiar contenido previo
+        produRelacionadosContainer.innerHTML = '';  
     
         produRelacionados.forEach(produRelated => {
             const produCard = `
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             produRelacionadosContainer.innerHTML += produCard;
         });
     }
-    // Función para seleccionar un producto y redirigir
+    // seleccionar un producto y redirigir
     function selectProduct(productId) {
         localStorage.setItem('selectProductId', productId);
         location.reload(); 
@@ -122,7 +123,7 @@ estrellas.forEach(function(estrella, index) {
     });
 });
 
-// Enviar el comentario con clasificación
+// Enviar comentario nuevo
 document.getElementById('submitClas').addEventListener('click', () => {
     let clasificar = document.querySelectorAll('.star.checked').length;
     let comentario = document.getElementById('comentario').value;
