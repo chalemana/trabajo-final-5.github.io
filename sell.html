@@ -32,7 +32,16 @@
           </li>
           <!--nombre usuario-->
           <li class="nav-item">
-            <a class="nav-link" href="#" id="usuariologin">Usuario</a>
+            <div class="dropdown"> <!--menu desplegable-->
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="usuariologin">
+                Usuario
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="logout">Cerrar Sesión</a></li>
+              </ul>
+            </div>
           </li>
           <!--Boton DarkMode-->
           <li class="nav-item">

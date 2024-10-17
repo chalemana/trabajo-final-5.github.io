@@ -40,6 +40,7 @@ let getJSONData = function(url){
     });
 }
 
+
 //DARK MODE
 let darkmode = localStorage.getItem('darkmode');
 const themeSwitch = document.getElementById('theme-switch');
@@ -69,3 +70,15 @@ themeSwitch.addEventListener('click', () => {
     disableDarkMode()
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutButton = document.getElementById('logout');
+
+  logoutButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+});
+});
+
+
