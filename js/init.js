@@ -39,3 +39,33 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+//DARK MODE
+let darkmode = localStorage.getItem('darkmode');
+const themeSwitch = document.getElementById('theme-switch');
+
+//Activa el dark mode
+function enableDarkMode() {
+  document.body.classList.add('darkmode');
+  localStorage.setItem('darkmode', 'active');
+
+}
+//Desactiva el dark mode
+function disableDarkMode() {
+  document.body.classList.remove('darkmode');
+  localStorage.setItem('darkmode', null);
+}
+//Crea la condicion que si el darkmode esta activo active la funcion enableDarkmode()
+if(darkmode === "active") enableDarkMode()
+
+  //Crea condicion de cuando debe de activarse y desactivarse los modos
+themeSwitch.addEventListener('click', () => {
+  darkmode = localStorage.getItem('darkmode');
+  
+  if (darkmode !== "active") {
+    enableDarkMode()
+  }
+  else {
+    disableDarkMode()
+  }
+});

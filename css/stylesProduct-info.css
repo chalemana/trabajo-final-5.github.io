@@ -4,7 +4,6 @@ body{
 font-family: "Quicksand", sans-serif;
 }
 
-
 /*Sección descripción producto */
 #productName {
     text-align: center;
@@ -19,8 +18,10 @@ font-family: "Quicksand", sans-serif;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.darkmode
 .product-info-container {
-    margin-top: 20px;
+    margin-top: 80px;
 }
 
 .productContainer{
@@ -29,6 +30,7 @@ font-family: "Quicksand", sans-serif;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .productContainer:hover,
 #comentarioSeccion:hover,
 #clasControl:hover {
@@ -54,27 +56,40 @@ font-family: "Quicksand", sans-serif;
     font-size: 14px;
 }
 
-/*Sección imagenes del producto */
-#imagenPrincipalContainer {
-    border: 1px solid #ddd;
-    padding: 5px;
-    text-align: center;
-    background-color:   #EEEDE9;;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#imagenMini img {
-    border: 3px solid   #EEEDE9;
+/*Sección carrusel imagenes del producto */
+.thumbnail {
+    width: 100px;
     margin-right: 5px;
     cursor: pointer;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    border: 2px solid transparent;
 }
 
-#imagenMini img:hover {
-    transform: scale(1.5);
+.thumbnail:hover {
+    border: 2px solid  #5a9589;
+}
+
+.carousel-item img {
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    color: #796a6a;
+} 
+
+/* Flechas del carrusel en modo oscuro */
+.darkmode .carousel-control-prev,
+.darkmode .carousel-control-next {
+    background: none; 
+    border: none; 
+    color: #796a6a;
+}
+
+.darkmode .carousel-control-prev:hover,
+.darkmode .carousel-control-next:hover {
+    background: none; 
+    color: #8e6969; 
 }
 
 
@@ -193,3 +208,35 @@ font-family: "Quicksand", sans-serif;
     object-fit: cover; 
 }
 
+/*DARK MODE*/
+.darkmode {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+#theme-switch {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #5a9589;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 20px;
+    
+}
+#theme-switch i {
+    fill: #38373C;
+}
+#theme-switch i:last-child{
+    display: none;
+    
+}
+.darkmode #theme-switch i:first-child {
+display: none;
+}
+.darkmode #theme-switch i:last-child{
+    display: block;
+}
