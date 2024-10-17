@@ -39,3 +39,14 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const logoutButton = document.getElementById('logout');
+
+  logoutButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+});
+});
+

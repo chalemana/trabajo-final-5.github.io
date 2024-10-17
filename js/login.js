@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
     document.getElementById('submit').addEventListener('click', (event) => {
         event.preventDefault();
         let usuario = document.getElementById('inputEmail').value;
