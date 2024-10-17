@@ -1,9 +1,11 @@
-document.addEventListener('DOMContentLoaded', ()=> {
-let usuario=localStorage.getItem("user")
-
-if (usuario===null) {
-location.href="login.html";
-}else{
-    document.getElementById('usuariologin').innerText=usuario;
-}  
+document.addEventListener('DOMContentLoaded', function() {
+    let user = localStorage.getItem('user');
+    if (!user) {
+        // Si no hay usuario logueado, redirigir a login.html
+        window.location = 'login.html';
+    } else {
+        // Mostrar el usuario logueado en la página
+        document.getElementById('usuariologin').textContent = user;
+    }
 });
+

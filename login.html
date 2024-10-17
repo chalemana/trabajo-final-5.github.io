@@ -23,7 +23,7 @@
       <div class="col-xs-12 col-sm-8 col-lg-12"></div> 
       <img src="img\login.png" class="img-login" /> 
        <div class="form-login">
-         <form action="index.html"> <!--formulario para login, redirige a index pagina inicio-->
+         <form> <!-- Eliminar el action, ya que redirigimos con login.js -->
           <div>
            <div>
              <label for="user"><b>Usuario</b></label>
@@ -33,21 +33,13 @@
            <label for="password"><b>Contraseña</b></label>
            <input type="password" placeholder="Ingrese Contraseña" name="password" id="inputPassword" Required> <br> <br>
 
-      
            <button type="submit" id="submit">Ingresar</button><br> <br>
          </div>
-           </div>
-        
-     
         </form>
       </div>
     </div>
-
-
-  
-   
-
   </main>
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -56,6 +48,7 @@
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
     </div>
   </footer>
+
   <script src="js/login.js"></script>
   <script src="js/checklogin.js"></script> 
 </body>
