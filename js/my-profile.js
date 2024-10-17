@@ -2,13 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('profileForm');
     const profilePicInput = document.getElementById('profilePicInput');
     const profilePic = document.getElementById('profilePic');
-    let usuariologueado = localStorage.getItem('user')
+    let usuariologueado = localStorage.getItem('user');
+
     // Verifica si el usuario está logueado
     if (!usuariologueado) {
         window.location.href = 'login.html';
     }
-document.getElementById('inputEmail').value=usuariologueado;
-    
+
+    document.getElementById('inputEmail').value = usuariologueado;
 
     // Cargar datos del perfil
     loadProfileData();
@@ -16,7 +17,6 @@ document.getElementById('inputEmail').value=usuariologueado;
     // Envío del formulario
     form.addEventListener('submit', function(e) {
         e.preventDefault();
-        e.stopPropagation();
         if (form.checkValidity()) {
             saveProfileData();
             alert('Perfil actualizado con éxito');
@@ -31,23 +31,23 @@ document.getElementById('inputEmail').value=usuariologueado;
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-                profilePic.src = e.target.result;
-                localStorage.setItem('profilePic', e.target.result);
+                profilePic.src = e.target.result; // Actualiza la imagen de perfil
+                localStorage.setItem('profilePic', e.target.result); // Guarda la imagen en localStorage
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); // Lee el archivo como una URL de datos
         }
     });
 
-    
     function loadProfileData() {
         const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
-        for (const [key, value] of Object.entries(profileData)) {
-            if (document.getElementById(key)) {
-                document.getElementById(key).value = value;
+        for (const key in profileData) {
+            const element = document.getElementById(key);
+            if (element) {
+                element.value = profileData[key]; // Cargar datos en los campos
             }
         }
-        document.getElementById('email').innerText=localStorage.getItem('user') || 'Usuario';
-        profilePic.src = localStorage.getItem('profilePic') || '/api/placeholder/150/150';
+        // Cargar la imagen de perfil desde localStorage o usar una predeterminada
+        profilePic.src = localStorage.getItem('profilePic') || 'img/chili.jpg';
     }
 
     function saveProfileData() {
@@ -56,9 +56,10 @@ document.getElementById('inputEmail').value=usuariologueado;
             segundoNombre: document.getElementById('segundoNombre').value,
             apellido: document.getElementById('apellido').value,
             segundoApellido: document.getElementById('segundoApellido').value,
-            telefono: document.getElementById('telefono').value
+            telefono: document.getElementById('telefono').value,
+            email: document.getElementById('inputEmail').value // Guardar también el email
         };
-        localStorage.setItem('profileData', JSON.stringify(profileData));
-        localStorage.setItem('user', document.getElementById('email').value);
+        localStorage.setItem('profileData', JSON.stringify(profileData)); // Guardar datos en localStorage
+        localStorage.setItem('user', document.getElementById('inputEmail').value); // Guardar email
     }
 });

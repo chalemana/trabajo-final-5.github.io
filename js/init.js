@@ -71,6 +71,7 @@ themeSwitch.addEventListener('click', () => {
   }
 });
 
+//cerrar sesion
 document.addEventListener('DOMContentLoaded', function() {
   const logoutButton = document.getElementById('logout');
 
