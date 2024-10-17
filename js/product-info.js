@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // Convierte la Fecha a formato D/M/A, hora:min:sec
     function convertirFecha(newFecha) {
         return newFecha.getDate() + "/" + (newFecha.getMonth() + 1) + "/" + newFecha.getFullYear() + ", " +
@@ -22,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Mostrar productos relacionados
                 showproduRelacionados(data.relatedProducts);
+
+                // Mostrar comentarios desde la API
+                mostrarComentariosDesdeApi(productId);
             })
             .catch(error => console.error('Error al obtener la información del producto:', error));
-
-        // Mostrar comentarios
-        mostrarComentariosDesdeLocalStorage();
     }
 
     // Producto seleccionado guardado en localStorage
@@ -75,10 +74,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Mostrar comentarios desde localStorage
-    function mostrarComentariosDesdeLocalStorage() {
-        const comentariosGuardados = JSON.parse(localStorage.getItem('comentarios')) || [];
-        mostrarComentarios(comentariosGuardados);
+    // Mostrar comentarios desde la API
+    function mostrarComentariosDesdeApi(productId) {
+        fetch("https://japceibal.github.io/emercado-api/products_comments/" + productId + ".json")
+            .then(response => response.json())
+            .then(comentarios => {
+                const comentariosGuardados = JSON.parse(localStorage.getItem(`comentarios_${productId}`)) || [];
+                const todosLosComentarios = comentarios.map(comentario => ({
+                    user: comentario.user,
+                    description: comentario.description,
+                    score: comentario.score,
+                    dateTime: comentario.dateTime
+                }));
+
+                // Combina los comentarios de la API y los guardados en localStorage
+                const comentariosFinales = [...todosLosComentarios, ...comentariosGuardados];
+                mostrarComentarios(comentariosFinales);
+            })
+            .catch(error => console.error('Error al obtener los comentarios:', error));
     }
 
     // Mostrar comentarios en el HTML
@@ -130,8 +143,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Obtener los comentarios existentes desde localStorage
-        const comentariosGuardados = JSON.parse(localStorage.getItem('comentarios')) || [];
+        // Obtener los comentarios existentes desde localStorage para el producto específico
+        const comentariosGuardados = JSON.parse(localStorage.getItem(`comentarios_${productId}`)) || [];
 
         // Crear un nuevo comentario
         const nuevoComentario = {
@@ -145,14 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
         comentariosGuardados.push(nuevoComentario);
 
         // Guardar el array actualizado en localStorage
-        localStorage.setItem('comentarios', JSON.stringify(comentariosGuardados));
+        localStorage.setItem(`comentarios_${productId}`, JSON.stringify(comentariosGuardados));
 
-        // Mostrar todos los comentarios actualizados
-        mostrarComentarios(comentariosGuardados);
+        // Mostrar todos los comentarios actualizados, incluyendo el nuevo
+        mostrarComentarios([...comentariosGuardados, nuevoComentario]);
 
         // Limpiar el formulario
         document.querySelectorAll('.star.checked').forEach(star => star.classList.remove('checked'));
         document.getElementById('comentario').value = '';
     });
-
 });

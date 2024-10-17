@@ -71,15 +71,13 @@ themeSwitch.addEventListener('click', () => {
   }
 });
 
-//cerrar sesion
+// Cerrar sesión
 document.addEventListener('DOMContentLoaded', function() {
-  const logoutButton = document.getElementById('logout');
-
-  logoutButton.addEventListener('click', function(e) {
-    e.preventDefault();
-    localStorage.removeItem('user');
-    window.location.href = 'login.html';
+  document.addEventListener('click', function(e) {
+    if (e.target && e.target.id === 'logout') {
+      e.preventDefault();
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    }
+  });
 });
-});
-
-
