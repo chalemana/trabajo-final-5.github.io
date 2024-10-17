@@ -8,22 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -44,16 +29,76 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
+          <!--nombre usuario-->
           <li class="nav-item">
+            <div class="dropdown"> <!--menu desplegable-->
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="usuariologin">
+                Usuario
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="logout">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+          </li>
+          <!--Boton DarkMode-->
+          <li class="nav-item">
+            <button id="theme-switch">
+              <i class="fa-solid fa-moon"></i>
+              <i class="fa-regular fa-sun"></i>
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+  <div class="container mt-5">
+      <div class="card">
+          <div class="card-body">
+              <h2 class="card-title mb-4">Perfil de Usuario</h2>
+              <form id="profileForm">
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="nombre" class="form-label">Nombre*</label>
+                          <input type="text" class="form-control" id="nombre" required>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="segundoNombre" class="form-label">Segundo nombre</label>
+                          <input type="text" class="form-control" id="segundoNombre">
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label for="apellido" class="form-label">Apellido*</label>
+                          <input type="text" class="form-control" id="apellido" required>
+                      </div>
+                      <div class="col-md-6">
+                          <label for="segundoApellido" class="form-label">Segundo apellido</label>
+                          <input type="text" class="form-control" id="segundoApellido">
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label for="email" class="form-label">E-mail*</label>
+                      <input type="email" class="form-control" id="email" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="telefono" class="form-label">Teléfono de contacto</label>
+                      <input type="tel" class="form-control" id="telefono">
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Foto de perfil</label>
+                      <div class="d-flex align-items-center">
+                          <img src="/api/placeholder/150/150" alt="Foto de perfil" class="profile-pic me-3" id="profilePic">
+                          <input type="file" class="form-control" id="profilePicInput" accept="image/*">
+                      </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Guardar cambios</button>
+              </form>
+          </div>
+      </div>
+  </div>
       </div>
     </div>
   </main>
@@ -68,6 +113,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/my-profile.js"></script>
+  <script src="js/checklogin.js"></script> 
 </body>
 
 </html>

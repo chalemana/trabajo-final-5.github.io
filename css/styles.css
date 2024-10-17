@@ -1,8 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+body {
+  font-family: "Quicksand", sans-serif;
+  padding-top: 80px;
+}
+/* Seccion my profile*/ 
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+ 
+/* Estilos generales para las secciones */
 .jumbotron,
 .card-body,
 .container,
 .site-header {
-  font-family: 'Verdana', serif !important;
+  font-family: "Quicksand", sans-serif !important;
 }
 
 .jumbotron .display-4 {
@@ -16,10 +39,11 @@ nav a {
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
+}
+
+.lead {
+  font-family: 'Quicksand', serif;
 }
 
 @media (min-width: 768px) {
@@ -28,6 +52,7 @@ nav a {
   }
 }
 
+/* Jumbotron con fondo e imagen de portada */
 .jumbotron {
   height: 50vh;
   padding: 5em inherit;
@@ -76,6 +101,7 @@ footer p {
   margin-bottom: .25rem;
 }
 
+/* Cambios de color para la barra de navegación */
 .site-header a {
   color: white;
   transition: ease-in-out color .15s;
@@ -122,6 +148,7 @@ footer p {
   background-color: rgba(255, 255, 255, 0.5);
 }
 
+/* Estilos de carga */
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -157,38 +184,7 @@ footer p {
   }
 }
 
-.signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: auto;
-}
-
-#spinner-wrapper {
-  position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1021;
-  display: none;
-}
-
-main {
-  min-height: calc(100vh - 210px);
-}
-
-a.custom-card,
-a.custom-card:hover {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-.checked {
-  color: orange;
-}
-
+/* Formulario de inicio de sesión */
 .form-login { /*estilo para formulario login*/
   background-color:#A0D9CE;
   text-align: center;
@@ -227,4 +223,84 @@ a.custom-card:hover {
     margin-right: auto;
     width: 50%;
   }
-  
+
+
+
+/* Modo oscuro */
+.darkmode {
+  background-color: #1e1e1e;
+  color: #b6afaf;
+} 
+
+/* Estilos del interruptor de tema */
+#theme-switch {
+  height: 50px;
+  width: 50px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: #5a9589;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 20px;
+}
+
+#theme-switch i {
+  fill: #38373C;
+}
+
+#theme-switch i:last-child {
+  display: none;
+}
+
+.darkmode #theme-switch i:first-child {
+  display: none;
+}
+
+.darkmode #theme-switch i:last-child {
+  display: block;
+}
+
+/* Aplicación del modo oscuro a encabezados y párrafos */
+.darkmode h1,
+.darkmode h2,
+.darkmode h3,
+.darkmode p {
+  color: #b6afaf;
+}
+
+/* Cambia los enlaces en modo oscuro */
+.darkmode a {
+  color: #5a9589;
+}
+
+/* Cambia el estilo de los botones en modo oscuro */
+.darkmode button {
+  background-color: #2a5950;
+  color: #b6afaf;
+}
+
+/* Navbar y footer en modo oscuro */
+.darkmode .navbar,
+.darkmode .footer {
+  background-color: #1e1e1e;
+  color: #b6afaf;
+}
+
+/* Navbar fija, evita que se mueva */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0; 
+  right: 0; 
+  width: 100vw; 
+  z-index: 9999; /* Se asegura de que esté por encima de otros elementos */
+  padding: 1rem 20px; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+/* Evitar desajustes entre modos */
+.darkmode body {
+  padding-top: 80px;
+}
+

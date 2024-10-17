@@ -11,6 +11,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/stylesProductos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -31,22 +32,80 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
+          <!--nombre usuario-->
           <li class="nav-item">
+            <div class="dropdown"> <!--menu desplegable-->
+              <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="usuariologin">
+                Usuario
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+                <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+                <li><a class="dropdown-item" href="#" id="logout">Cerrar Sesión</a></li>
+              </ul>
+            </div>
+          </li>
+          <!--busqueda-->
+          <input type="search" id="searchInput" placeholder="Buscar">
+            <!--Boton DarkMode-->
+          <li class="nav-item">
+            <button id="theme-switch">
+              <i class="fa-solid fa-moon"></i>
+              <i class="fa-regular fa-sun"></i>
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main class="pb-5 container">
+    <div class="row mb-4"></div>
+      <div class="col text-end">
+        <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+          <input type="radio" class="btn-check" name="options" id="sortAsc">
+          <label class="btn btn-light" for="sortAsc">$↓</label>
+          <input type="radio" class="btn-check" name="options" id="sortDesc">
+          <label class="btn btn-light" for="sortDesc">$↑</label>
+          <input type="radio" class="btn-check" name="options" id="sortRelevance" checked>
+          <label class="btn btn-light" for="sortRelevance"><i class="fas fa-sort-amount-down mr-1"></i></label>
+        </div>
+      </div>
+  
+    <div class="row mb-4">
+      <div class="col-lg-6 offset-lg-6 col-md-12">
+        <div class="row">
+          <div class="col">
+            <p class="font-weight-normal text-end my-2">Precio</p>
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="min." id="minPrice">
+          </div>
+          <div class="col">
+            <input class="form-control" type="number" placeholder="máx." id="maxPrice">
+          </div>
+          <div class="col-3">
+            <div class="btn-group" role="group">
+              <button class="btn btn-outline-secondary" id="filtrarBtn"> Filtrar </button>
+              <button class="btn btn-outline-secondary" id="limpiarBtn">Limpiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div id="tablaProducts">
         <h4>PRODUCTS</h4>
         <table>
-          <tbody id="container"></tbody>
+          <tbody id="container">
+          </tbody>
+          <div class="row">
+            <div class= "col-xs-12 col-sm-8 col-lg-12"></div> 
       </table>
     </div>
   
+  
   </main>
+  
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -66,7 +125,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
-  <script src="js/cheacklogin.js"></script> 
+  <script src="js/checklogin.js"></script> 
 </body>
 
 </html>
