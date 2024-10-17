@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'login.html';
     }
 document.getElementById('inputEmail').value=usuariologueado;
+    
 
     // Cargar datos del perfil
     loadProfileData();
@@ -37,7 +38,7 @@ document.getElementById('inputEmail').value=usuariologueado;
         }
     });
 
-    // Funciones auxiliares
+    
     function loadProfileData() {
         const profileData = JSON.parse(localStorage.getItem('profileData')) || {};
         for (const [key, value] of Object.entries(profileData)) {
@@ -45,8 +46,7 @@ document.getElementById('inputEmail').value=usuariologueado;
                 document.getElementById(key).value = value;
             }
         }
-        document.getElementById('nusuario').innerText=localStorage.getItem('userEmail') || 'Usuario';
-        document.getElementById('email').value = localStorage.getItem('user') || '';
+        document.getElementById('email').innerText=localStorage.getItem('user') || 'Usuario';
         profilePic.src = localStorage.getItem('profilePic') || '/api/placeholder/150/150';
     }
 
