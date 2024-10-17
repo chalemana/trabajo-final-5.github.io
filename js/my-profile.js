@@ -2,11 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('profileForm');
     const profilePicInput = document.getElementById('profilePicInput');
     const profilePic = document.getElementById('profilePic');
-
+    let usuariologueado = localStorage.getItem('user')
     // Verifica si el usuario está logueado
-    if (!localStorage.getItem('user')) {
+    if (!usuariologueado) {
         window.location.href = 'login.html';
     }
+document.getElementById('inputEmail').value=usuariologueado;
 
     // Cargar datos del perfil
     loadProfileData();
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Envío del formulario
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         if (form.checkValidity()) {
             saveProfileData();
             alert('Perfil actualizado con éxito');
