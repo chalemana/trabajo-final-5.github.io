@@ -24,9 +24,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Mostrar comentarios desde la API
                 mostrarComentariosDesdeApi(productId);
-            })
-            .catch(error => console.error('Error al obtener la información del producto:', error));
-    }
+                   
+             
+
+     // Botón de compra
+    document.getElementById('buyButton').addEventListener('click', () => {
+        Swal.fire({
+        title: "¡Producto añadido al carrito!",
+        text: "¿Quieres ver tu carrito o seguir comprando?",
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonText: "Ir al carrito",
+        cancelButtonText: "Seguir comprando"
+
+        }).then((result) => {
+        // Obtener el carrito actual del localStorage o inicializarlo vacío
+        let carrito = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
+        let product = {
+            id: productId,
+            name: data.name,
+            image: data.images[0],
+            cost: data.cost,
+            currency: data.currency,
+            cantidad: 1
+        };
+        // Verificar si el producto ya existe en el carrito
+        let productoExistente = carrito.find(item => item.id === productId);
+        if (productoExistente) {
+            productoExistente.cantidad += 1;  // Si ya existe, aumenta la cantidad
+        } else {
+            carrito.push(product);  // Si no existe, se agrega
+        }
+
+        // Guardar en localStorage
+        localStorage.setItem("productoEnCarrito", JSON.stringify(carrito));
+        console.log("Producto en carrito:", product);
+
+        // Redirigir al carrito si el usuario confirma
+        if (result.isConfirmed) {
+            window.location.href = "cart.html";
+        }
+       });
+    });
+})};
 
     // Producto seleccionado guardado en localStorage
     var productId = localStorage.getItem('selectProductId');
@@ -52,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             produRelacionadosContainer.appendChild(card);
         });
     }
+
 
     // Selección de producto relacionado
     window.selectRelatedProduct = (id) => {
