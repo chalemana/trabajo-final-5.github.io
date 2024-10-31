@@ -9,6 +9,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link href="css/stylesCard.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -43,6 +44,17 @@
               </ul>
             </div>
           </li>
+           <!--Boton carrito-->
+           <li class="nav-item position-relative">
+            <a class="nav-link" href="cart.html">
+              <button type="button" class="btn btn-secondary position-relative" onclick="location.href='cart.html'">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-badge" class="badge bg-secondary position-absolute top-0 start-100 translate-middle p-1">
+                  0 - $0
+                </span>
+              </button>
+            </a>
+          </li>
           <!--Boton DarkMode-->
           <li class="nav-item">
             <button id="theme-switch">
@@ -55,12 +67,72 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+   <!--CARRITO DE COMPRAS-->
+
+   <div class="container mt-5">
+    <h2 id="title">Mi Carrito</h2>
+    <div class="row">
+      <!-- Tabla de productos en el carrito -->
+      <div class="col-md-8">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Moneda</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="selectProductId">
+            <!-- Los productos se insertarán aquí dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Tabla de totales -->
+      <div class="col-md-4">
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td>Subtotal</td>
+              <td id="cartSubtotal">0</td>
+            </tr>
+            <tr>
+              <td>Descuentos</td>
+              <td id="cartDiscount">0</td>
+            </tr>
+            <tr>
+              <td>Envío</td>
+              <td id="cartShipping">250</td>
+            </tr>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td id="cartTotal">0</td>
+            </tr>
+          </tbody>
+        </table>
+      
+        <!--código de descuento -->
+        <div class="mb-3">
+          <input type="text" id="discountCode" class="form-control" placeholder="Código de descuento">
+          <button id="applyDiscount" class="btn btn-primary mt-2">Aplicar Descuento</button>
+        </div>
       </div>
     </div>
+    
+    <!-- Botones finalizar y vaciar -->
+    <button id="boton-finalizar-compra" class="btn btn-primary">Finalizar compra</button>
+    <button id="boton-vaciar-carrito" class="btn btn-secondary">Vaciar Carrito</button>
+  </div>
   </main>
+  <!--TERMINA CARRITO DE COMPRAS-->
+
+
+
+
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -80,6 +152,7 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/badgeCart.js"></script>
   <script src="js/checklogin.js"></script> 
 </body>
 

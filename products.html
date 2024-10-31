@@ -47,6 +47,17 @@
           </li>
           <!--busqueda-->
           <input type="search" id="searchInput" placeholder="Buscar">
+            <!--Boton carrito-->
+            <li class="nav-item position-relative">
+              <a class="nav-link" href="cart.html">
+                <button type="button" class="btn btn-secondary position-relative" onclick="location.href='cart.html'">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                  <span id="cart-badge" class="badge bg-secondary position-absolute top-0 start-100 translate-middle p-1">
+                    0 - $0
+                  </span>
+                </button>
+              </a>
+            </li>
             <!--Boton DarkMode-->
           <li class="nav-item">
             <button id="theme-switch">
@@ -126,6 +137,7 @@
   <script src="js/init.js"></script>
   <script src="js/products.js"></script>
   <script src="js/checklogin.js"></script> 
+  <script src="js/badgeCart.js"></script>
 </body>
 
 </html>
