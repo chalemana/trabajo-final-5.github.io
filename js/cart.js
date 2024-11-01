@@ -72,7 +72,7 @@ function showCartProducts(productoEnCarrito) {
         cartDiscount.innerText = '0';
     }
 
-    cartTotal.innerText = total.toFixed(2); // Muestra el total
+    cartTotal.innerText = total; // Muestra el total
     actualizarBadgeCarrito(productoEnCarrito.length); // Actualiza el badge del carrito
 }
 
