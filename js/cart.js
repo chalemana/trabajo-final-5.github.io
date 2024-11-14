@@ -69,15 +69,16 @@ function showCartProducts(productoEnCarrito) {
             <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i></button></td>
         `;
         CartProductsContainer.appendChild(row); // Agrega la fila al contenedor
+
     });
 
     // Actualiza subtotal general
     cartSubtotal.innerText = subtotalGeneral;
 
     // Actualiza el costo de envío en base a la selección
-    const tipoEnvio = document.getElementById('tipoEnvioSelect').value;
-    const costoEnvio = calcularCostoEnvio(tipoEnvio, subtotalGeneral);
-    cartEnvio.innerText = costoEnvio;
+    let tipoEnvio = document.getElementById('tipoEnvioSelect').value;
+    let costoEnvio = calcularCostoEnvio(tipoEnvio, subtotalGeneral);
+    cartEnvio.innerText = costoEnvio.toFixed(1);
 
     // Calcula el total con el costo de envío
     let total = subtotalGeneral + costoEnvio;
@@ -156,6 +157,7 @@ function actualizarBadgeCarrito(totalItems) {
     document.getElementById("cart-badge").textContent = `${totalItems} - $${document.getElementById('totalCarrito').innerText}`;
 }
 
+
 // Función para actualizar el costo de envío basado en la selección del tipo de envío
 document.getElementById('tipoEnvioSelect').addEventListener('change', function () {
     let tipoEnvio = this.value;
@@ -165,9 +167,8 @@ document.getElementById('tipoEnvioSelect').addEventListener('change', function (
 
     // Actualizar el total
     let total = subtotalCarrito + costoEnvio;
-    document.getElementById('totalCarrito').innerText = total;
+    document.getElementById('totalCarrito').innerText = total.toFixed(1);
 });
-
 
 
 // Boton finalizar compra 
@@ -183,8 +184,6 @@ let esquina = document.getElementById('esquina').value.trim();
 
 //forma de envio 
 let formaDeEnvio = document.getElementById("tipoEnvioSelect").value;
-
-
 
 //forma de pago 
 let formaDePago = document.getElementById("formaPago").value;
