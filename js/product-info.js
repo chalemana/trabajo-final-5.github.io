@@ -24,8 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Mostrar comentarios desde la API
                 mostrarComentariosDesdeApi(productId);
-                   
-             
+        
 
      // Botón de compra
     document.getElementById('buyButton').addEventListener('click', () => {
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (result.isConfirmed) {
             window.location.href = "cart.html";
         }
-       });
+        });
     });
 })};
 

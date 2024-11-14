@@ -11,6 +11,7 @@ let relevanteButton = document.getElementById("sortRelevance");
 
 let productsArray = [];
 
+// Muestra los datos en la tabla, usando el array proporcionado
 function showData(productsArray) {
     let Content = '';
     for (const product of productsArray) {
@@ -28,14 +29,16 @@ function showData(productsArray) {
                 </td>
             </tr>`;
     }
-    container.innerHTML = Content;
+        container.innerHTML = Content;
 }
 
+// Guarda el ID del producto seleccionado y redirige a su página de información
 function selectProduct(productId) {
     localStorage.setItem('selectProductId', productId);
     location.href = 'product-info.html';
 }
 
+// Filtra productos según el término ingresado en la barra de búsqueda
 function filterProducts() {
     let searchTerm = searchInput.value.toLowerCase();
     return productsArray.filter(product => 
@@ -43,9 +46,10 @@ function filterProducts() {
     );
 }
 
+// Ordena los productos filtrados en base al orden indicado (ascendente, descendente o por relevancia)
 function sortProducts(order) {
-  let filteredProducts = filterProducts();
-  
+    let filteredProducts = filterProducts();
+    
     if (order === 'asc') {
         filteredProducts.sort((a, b) => a.cost - b.cost);
     } 
@@ -59,7 +63,7 @@ function sortProducts(order) {
     showData(filteredProducts);
 }
 
-
+// Filtra productos según el rango de precios especificado en las barras de entrada
 function filtroPrice() {
         let minPrice = parseFloat(minBarra.value) || 0;
         let maxPrice = parseFloat(maxBarra.value) || Infinity;
@@ -68,7 +72,7 @@ function filtroPrice() {
         );
 };
 
-
+// Carga los datos de productos al iniciar la página según el ID de categoría almacenado
 document.addEventListener('DOMContentLoaded', () => {
     const id = localStorage.getItem('catID'); 
     
@@ -88,28 +92,35 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('No se encontró un ID de categoría en localStorage');
     }
 });
+
+// Filtra productos en tiempo real según el término de búsqueda
 searchInput.addEventListener('input', () => {
     showData(filterProducts());
 });
 
+// Ordena productos en orden ascendente
 sortAscBtn.addEventListener('click', () => {
     sortProducts('asc');
 });
 
+// Ordena productos en orden descendente
 sortDescBtn.addEventListener('click', () => {
     sortProducts('desc');
 });
 
+// Aplica el filtro de precios y muestra los productos
 buttonFilter.addEventListener('click', () => {
     showData(filtroPrice());
 });
 
+// Limpia el filtro de precios y muestra todos los productos
 buttonClear.addEventListener('click', () => {
     minBarra.value = '';
     maxBarra.value = '';
     showData(productsArray);
 });
 
+// Ordena productos por relevancia
 relevanteButton.addEventListener('click', () => {
     sortProducts('relevante');
 });
