@@ -39,6 +39,8 @@ body {
 .profile-pic {
     width: 100px; 
     height: 100px; 
+    max-width: 150px;
+    max-height: 150px; 
     border-radius: 50%; 
     object-fit: cover; 
     margin-right: 15px;

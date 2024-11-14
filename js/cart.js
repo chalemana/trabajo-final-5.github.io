@@ -12,14 +12,28 @@ document.addEventListener('DOMContentLoaded', () => {
 // Variable para rastrear si se aplicó un descuento
 let descuentoAplicado = false;
 
+//calcular costo de envio y segun el tipo
+function calcularCostoEnvio(tipoEnvio, subtotalCarrito) {
+    let tasas = {
+        'premium': 0.15,
+        'express': 0.07,
+        'standard': 0.05
+    };
+    // Obtener la tasa según el tipo de envío
+    let tasaEnvio = tasas[tipoEnvio] || 0; 
+
+    // Calcular y devolver el costo de envío
+    return subtotalCarrito * tasaEnvio;
+}
+
 // Muestra los productos en el carrito y actualiza subtotales y totales
 function showCartProducts(productoEnCarrito) {
     let CartProductsContainer = document.getElementById('selectProductId');
-    let cartSubtotal = document.getElementById('cartSubtotal');
-    let cartEnvio = document.getElementById('cartShipping');
-    let cartTotal = document.getElementById('cartTotal');
+    let cartSubtotal = document.getElementById('subtotalCarrito');
+    let cartEnvio = document.getElementById('envioCarrito');
+    let cartTotal = document.getElementById('totalCarrito');
     let cartDiscount = document.getElementById('cartDiscount');
-    let costoEnvio = 0; 
+    
     let subtotalGeneral = 0;
 
     CartProductsContainer.innerHTML = ''; // Limpia el contenedor
@@ -28,8 +42,8 @@ function showCartProducts(productoEnCarrito) {
     if (productoEnCarrito.length === 0) {
         CartProductsContainer.innerHTML = '<tr><td colspan="7">El carrito está vacío.</td></tr>';
         cartSubtotal.innerText = '0';
-        cartEnvio.innerText = costoEnvio;
-        cartTotal.innerText = costoEnvio;
+        cartEnvio.innerText = '0';
+        cartTotal.innerText = '0';
         actualizarBadgeCarrito(0);
         return;
     }
@@ -57,11 +71,16 @@ function showCartProducts(productoEnCarrito) {
         CartProductsContainer.appendChild(row); // Agrega la fila al contenedor
     });
 
-    // Actualiza subtotales, envío y total
+    // Actualiza subtotal general
     cartSubtotal.innerText = subtotalGeneral;
+
+    // Actualiza el costo de envío en base a la selección
+    const tipoEnvio = document.getElementById('tipoEnvioSelect').value;
+    const costoEnvio = calcularCostoEnvio(tipoEnvio, subtotalGeneral);
     cartEnvio.innerText = costoEnvio;
 
-    let total = subtotalGeneral + costoEnvio; // Calcula el total
+    // Calcula el total con el costo de envío
+    let total = subtotalGeneral + costoEnvio;
 
     // Aplica descuento si corresponde
     if (descuentoAplicado) {
@@ -72,7 +91,7 @@ function showCartProducts(productoEnCarrito) {
         cartDiscount.innerText = '0';
     }
 
-    cartTotal.innerText = total.toFixed(2); // Muestra el total
+    cartTotal.innerText = total; // Muestra el total
     actualizarBadgeCarrito(productoEnCarrito.length); // Actualiza el badge del carrito
 }
 
@@ -100,16 +119,16 @@ function vaciarCarrito() {
 
 // Finaliza la compra redirigiendo a PayPal
 function finalizarCompra() {
-    let cartTotal = document.getElementById('cartTotal').textContent; 
+    let cartTotal = document.getElementById('totalCarrito').textContent; 
     let paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tuemail@tuempresa.com&currency_code=USD&amount=${cartTotal}&item_name=Compra%20en%20tu%20sitio`;
-    window.location.href = paypalUrl; // Redirige a PayPal
+    //window.location.href = paypalUrl; // Redirige a PayPal
 }
 
 // Actualiza la cantidad de un producto en el carrito
 function updateQuantity(index, change) {
     let productoEnCarrito = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
 
-    // Asegura que la cantidad no baje de 1 y muestra el carrito actualizado
+    // la cantidad no baje de 1 y muestra el carrito actualizado
     if (productoEnCarrito[index].cantidad + change >= 1) {
         productoEnCarrito[index].cantidad += change; 
         localStorage.setItem("productoEnCarrito", JSON.stringify(productoEnCarrito)); 
@@ -134,5 +153,92 @@ function removeFromCart(index) {
 
 // Actualiza el badge del carrito con el total de productos y el total general $
 function actualizarBadgeCarrito(totalItems) {
-    document.getElementById("cart-badge").textContent = `${totalItems} - $${document.getElementById('cartTotal').innerText}`;
+    document.getElementById("cart-badge").textContent = `${totalItems} - $${document.getElementById('totalCarrito').innerText}`;
 }
+
+// Función para actualizar el costo de envío basado en la selección del tipo de envío
+document.getElementById('tipoEnvioSelect').addEventListener('change', function () {
+    let tipoEnvio = this.value;
+    let subtotalCarrito = parseFloat(document.getElementById('subtotalCarrito').innerText);
+    let costoEnvio = calcularCostoEnvio(tipoEnvio, subtotalCarrito);
+    document.getElementById('envioCarrito').innerText = costoEnvio.toFixed(1);
+
+    // Actualizar el total
+    let total = subtotalCarrito + costoEnvio;
+    document.getElementById('totalCarrito').innerText = total;
+});
+
+
+
+// Boton finalizar compra 
+let botonFinalizarCompra = document.getElementById("boton-finalizar-compra");
+botonFinalizarCompra.addEventListener('click', () => {  
+
+// direccion 
+let departamento = document.getElementById('departamento').value.trim();
+let localidad = document.getElementById('localidad').value.trim();
+let calle = document.getElementById('calle').value.trim();
+let numero = document.getElementById('numero').value.trim();
+let esquina = document.getElementById('esquina').value.trim();
+
+//forma de envio 
+let formaDeEnvio = document.getElementById("tipoEnvioSelect").value;
+
+
+
+//forma de pago 
+let formaDePago = document.getElementById("formaPago").value;
+
+//Verificar que haya producos para ejecutar la compra
+let existenProductos = JSON.parse(localStorage.getItem("productoEnCarrito")) || []
+
+if(existenProductos.length === 0) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Carrito vacío',
+        text: 'No puedes finalizar la compra sin productos en el carrito.',
+    });
+    return;
+}
+    
+    if(!departamento || !localidad || !calle || !numero || !esquina) {
+    Swal.fire({
+        icon: 'warning',
+        title: 'No rellenaste todos los campos de tu direccion',
+        text: 'Por favor, rellene los campos vacios',
+        });
+        return;
+    }
+    if(!formaDeEnvio){
+    Swal.fire({
+        icon: 'warning',
+        title:'Tipo de envío no seleccionado',
+        text: 'Por favor, selecciona un tipo de envío.',
+        });
+        return;
+        
+    }
+    if (!formaDePago){
+    Swal.fire({
+        icon: 'warning',
+        title:'Forma de pago no seleccionada',
+        text: 'Por favor, selecciona una forma de pago.',
+    });
+    return;
+    }
+    Swal.fire({
+        icon: 'success',
+        title:'Compra realizada',
+        text: '¡Gracias por tu compra, te esperamos de vuelta!',
+}).then(() => {
+    //cuando la compra se realiza se eliminan los productos del carrito
+    localStorage.removeItem("productoEnCarrito");
+    // Esperar 1 segundo y redirigir al index
+        setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1000); 
+});
+});
+
+
+
