@@ -171,6 +171,48 @@ document.getElementById('tipoEnvioSelect').addEventListener('change', function (
 });
 
 
+//Forma de pago con los campos para PayPal, tarjeta de credito y transferencia bancaria
+document.getElementById('formaPago').addEventListener('change', function () {
+const camposAdicionales = document.getElementById('camposAdicionales');
+camposAdicionales.innerHTML = '';
+  
+ switch (this.value) {
+ case 'tarjeta':
+    camposAdicionales.innerHTML = `
+          <label for="numeroTarjeta">Número de tarjeta:</label>
+          <input type="text" id="numeroTarjeta" class="form-control" placeholder="Ingrese el número de tarjeta">
+          <label for="fechaVencimiento">Fecha de vencimiento:</label>
+          <input type="month" id="fechaVencimiento" class="form-control">
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" class="form-control" placeholder="Ingrese el CVV">
+        `;
+    camposAdicionales.style.display = 'block';
+        break;
+        case 'transferencia':
+    camposAdicionales.innerHTML = `
+          <label for="cuentaBancaria">Número de cuenta bancaria:</label>
+          <input type="text" id="cuentaBancaria" class="form-control" placeholder="Ingrese el número de cuenta">
+        `;
+    camposAdicionales.style.display = 'block';
+        break;
+        case 'paypal':
+            camposAdicionales.innerHTML = `
+              <label for="correoPaypal">Correo de PayPal:</label>
+              <input type="email" id="correoPaypal" class="form-control" placeholder="Ingrese su correo de PayPal">
+              <div style="margin-top: 10px;">
+              <a href="https://www.paypal.com/signin" target="_blank" class="btn btn-primary">Ir a PayPal</a>
+              </div>
+            `;
+        break;
+        
+       
+    camposAdicionales.style.display = 'block';
+       break;
+       default:
+    camposAdicionales.style.display = 'none';
+    }
+  });
+  
 // Boton finalizar compra 
 let botonFinalizarCompra = document.getElementById("boton-finalizar-compra");
 botonFinalizarCompra.addEventListener('click', () => {  
@@ -188,10 +230,9 @@ let formaDeEnvio = document.getElementById("tipoEnvioSelect").value;
 //forma de pago 
 let formaDePago = document.getElementById("formaPago").value;
 
-//Verificar que haya producos para ejecutar la compra
-let existenProductos = JSON.parse(localStorage.getItem("productoEnCarrito")) || []
+let existenProductos = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
 
-if(existenProductos.length === 0) {
+if (existenProductos.length === 0) {
     Swal.fire({
         icon: 'warning',
         title: 'Carrito vacío',
@@ -199,45 +240,84 @@ if(existenProductos.length === 0) {
     });
     return;
 }
-    
-    if(!departamento || !localidad || !calle || !numero || !esquina) {
+
+if (!departamento || !localidad || !calle || !numero || !esquina) {
     Swal.fire({
         icon: 'warning',
-        title: 'No rellenaste todos los campos de tu direccion',
-        text: 'Por favor, rellene los campos vacios',
-        });
-        return;
-    }
-    if(!formaDeEnvio){
+        title: 'No rellenaste todos los campos de tu dirección',
+        text: 'Por favor, rellene los campos vacíos',
+    });
+    return;
+}
+
+if (!formaDeEnvio) {
     Swal.fire({
         icon: 'warning',
-        title:'Tipo de envío no seleccionado',
+        title: 'Tipo de envío no seleccionado',
         text: 'Por favor, selecciona un tipo de envío.',
-        });
-        return;
-        
-    }
-    if (!formaDePago){
+    });
+    return;
+}
+
+let pago = document.getElementById('formaPago').value;
+
+if (!formaDePago) {
     Swal.fire({
         icon: 'warning',
-        title:'Forma de pago no seleccionada',
+        title: 'Forma de pago no seleccionada',
         text: 'Por favor, selecciona una forma de pago.',
     });
     return;
+}
+
+
+if (formaDePago === 'tarjeta') {
+    let numeroTarjeta = document.getElementById('numeroTarjeta')?.value;
+    let fechaVencimiento = document.getElementById('fechaVencimiento')?.value;
+    let cvv = document.getElementById('cvv')?.value;
+
+    if (!numeroTarjeta || !fechaVencimiento || !cvv) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Datos de tarjeta incompletos',
+            text: 'Por favor, rellena todos los campos de tu tarjeta de credito.'
+        });
+        return;
     }
-    Swal.fire({
-        icon: 'success',
-        title:'Compra realizada',
-        text: '¡Gracias por tu compra, te esperamos de vuelta!',
+} else if (formaDePago === 'transferencia') {
+    let cuentaBancaria = document.getElementById('cuentaBancaria')?.value;
+
+    if (!cuentaBancaria) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Datos de transferencia incompletos',
+            text: 'Por favor, ingresa el número de cuenta bancaria.',
+        });
+        return;
+    }
+} else if (formaDePago === 'paypal') {
+    const correoPaypal = document.getElementById('correoPaypal')?.value;
+
+    if (!correoPaypal) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Correo de PayPal no ingresado',
+            text: 'Por favor, ingresa tu correo de PayPal.',
+        });
+        return;
+    }
+}
+
+Swal.fire({
+    icon: 'success',
+    title: 'Compra realizada',
+    text: '¡Gracias por tu compra, te esperamos de vuelta!',
 }).then(() => {
-    //cuando la compra se realiza se eliminan los productos del carrito
+    // Cuando la compra se realiza, se eliminan los productos del carrito
     localStorage.removeItem("productoEnCarrito");
     // Esperar 1 segundo y redirigir al index
-        setTimeout(() => {
+    setTimeout(() => {
         window.location.href = "index.html";
-    }, 1000); 
+    }, 1000);
 });
-});
-
-
-
+ });
