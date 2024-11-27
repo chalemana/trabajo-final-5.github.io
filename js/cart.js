@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('boton-vaciar-carrito').addEventListener('click', vaciarCarrito);
     document.getElementById('boton-finalizar-compra').addEventListener('click', finalizarCompra);
     document.getElementById('applyDiscount').addEventListener('click', aplicarDescuento);
+
+    // Validar campos de dirección en tiempo real
+    ['departamento', 'localidad', 'calle', 'numero', 'esquina'].forEach(id => {
+        let field = document.getElementById(id);
+        field.addEventListener('input', () => {
+            validateField(field, value => value !== '', 'Este campo es obligatorio.');
+        });
+    });
 });
 
 // Variable para rastrear si se aplicó un descuento
@@ -26,6 +34,28 @@ function calcularCostoEnvio(tipoEnvio, subtotalCarrito) {
     return subtotalCarrito * tasaEnvio;
 }
 
+// Función para animar el badge del carrito
+function animateCartBadge() {
+    let badge = document.getElementById("cart-badge");
+    if (!badge) return;
+
+    badge.classList.add("animate__animated", "animate__heartBeat");
+    badge.addEventListener("animationend", () => {
+        badge.classList.remove("animate__animated", "animate__heartBeat");
+    });
+}
+
+// Función para resaltar el subtotal al actualizarlo
+function highlightSubtotal() {
+    let subtotalElement = document.getElementById('subtotalCarrito');
+    if (!subtotalElement) return;
+
+    subtotalElement.classList.add("animate__animated", "animate__heartBeat");
+    subtotalElement.addEventListener("animationend", () => {
+        subtotalElement.classList.remove("animate__animated", "animate__heartBeat");
+    });
+}
+
 // Muestra los productos en el carrito y actualiza subtotales y totales
 function showCartProducts(productoEnCarrito) {
     let CartProductsContainer = document.getElementById('selectProductId');
@@ -35,7 +65,7 @@ function showCartProducts(productoEnCarrito) {
     let cartDiscount = document.getElementById('cartDiscount');
     
     let subtotalGeneral = 0;
-
+    let prevTotalItems = parseInt(document.getElementById("cart-badge").textContent.split(" - ")[0]) || 0;
     CartProductsContainer.innerHTML = ''; // Limpia el contenedor
 
     // Si el carrito está vacío, muestra un mensaje
@@ -74,6 +104,7 @@ function showCartProducts(productoEnCarrito) {
 
     // Actualiza subtotal general
     cartSubtotal.innerText = subtotalGeneral;
+    highlightSubtotal(); // Resalta el subtotal
 
     // Actualiza el costo de envío en base a la selección
     let tipoEnvio = document.getElementById('tipoEnvioSelect').value;
@@ -86,14 +117,23 @@ function showCartProducts(productoEnCarrito) {
     // Aplica descuento si corresponde
     if (descuentoAplicado) {
         let descuentoSumado = total * 0.25; // 25% de descuento
-        cartDiscount.innerText = `- ${descuentoSumado}`;
+        cartDiscount.innerText = `- ${descuentoSumado.toFixed(1)}`;
         total -= descuentoSumado; 
     } else {
         cartDiscount.innerText = '0';
     }
 
-    cartTotal.innerText = total; // Muestra el total
+    cartTotal.innerText = total.toFixed(1); // Muestra el total
     actualizarBadgeCarrito(productoEnCarrito.length); // Actualiza el badge del carrito
+    if (productoEnCarrito.length !== prevTotalItems) {
+    animateCartBadge(); // Agrega la animación
+}
+}
+
+// Actualiza localStorage y refresca la vista del carrito
+function updateCartLocalStorage(productoEnCarrito) {
+    localStorage.setItem("productoEnCarrito", JSON.stringify(productoEnCarrito));
+    showCartProducts(productoEnCarrito);
 }
 
 // Aplica el descuento basado en el código ingresado
@@ -102,26 +142,39 @@ function aplicarDescuento() {
     
     if (descuentoCode === "FERNANDITOS" && !descuentoAplicado) {
         descuentoAplicado = true; // descuento como aplicado
-        alert("¡Descuento del 25% aplicado!");
+        Swal.fire('¡Descuento aplicado!', 'Se ha aplicado un 25% de descuento.', 'success');
         showCartProducts(JSON.parse(localStorage.getItem("productoEnCarrito"))); 
     } else if (descuentoAplicado) {
-        alert("El descuento ya ha sido aplicado."); 
+        Swal.fire('Descuento ya aplicado', 'No puedes aplicar el mismo descuento dos veces.', 'info'); 
     } else {
-        alert("Código de descuento inválido."); 
+        Swal.fire('Código inválido', 'Por favor, ingresa un código válido.', 'error');
     }
 }
 
-// Vacia el carrito y actualiza la vista
+// Vaciar carrito
 function vaciarCarrito() {
-    localStorage.removeItem("productoEnCarrito"); 
-    showCartProducts([]); 
-    alert("El carrito ha sido vaciado.");
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás deshacer esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#5a9589',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, vaciar',
+        cancelButtonText: 'Cancelar'
+    }).then(result => {
+        if (result.isConfirmed) {
+            localStorage.removeItem("productoEnCarrito"); 
+            showCartProducts([]);
+            Swal.fire('Carrito vacío', 'El carrito ha sido vaciado con éxito.', 'success');
+        }
+    });
 }
 
-// Finaliza la compra redirigiendo a PayPal
+// Finaliza la compra 
 function finalizarCompra() {
     let cartTotal = document.getElementById('totalCarrito').textContent; 
-    let paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tuemail@tuempresa.com&currency_code=USD&amount=${cartTotal}&item_name=Compra%20en%20tu%20sitio`;
+    //let paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tuemail@tuempresa.com&currency_code=USD&amount=${cartTotal}&item_name=Compra%20en%20tu%20sitio`;
     //window.location.href = paypalUrl; // Redirige a PayPal
 }
 
@@ -145,11 +198,27 @@ function updateQuantityDirect(index, value) {
 }
 
 // Elimina un producto del carrito
+// Elimina un producto del carrito con confirmación
 function removeFromCart(index) {
-    let productoEnCarrito = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
-    productoEnCarrito.splice(index, 1); 
-    localStorage.setItem("productoEnCarrito", JSON.stringify(productoEnCarrito)); 
-    showCartProducts(productoEnCarrito);
+    Swal.fire({
+        title: '¿Eliminar producto?',
+        text: "No podrás deshacer esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#5a9589',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let productoEnCarrito = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
+            productoEnCarrito.splice(index, 1); // Eliminar producto del array
+            localStorage.setItem("productoEnCarrito", JSON.stringify(productoEnCarrito)); // Actualizar localStorage
+            showCartProducts(productoEnCarrito); // Actualizar vista
+            animateCartBadge(); // Animar el badge
+            Swal.fire('Eliminado', 'El producto fue eliminado del carrito.', 'success');
+        }
+    });
 }
 
 // Actualiza el badge del carrito con el total de productos y el total general $
@@ -173,46 +242,42 @@ document.getElementById('tipoEnvioSelect').addEventListener('change', function (
 
 //Forma de pago con los campos para PayPal, tarjeta de credito y transferencia bancaria
 document.getElementById('formaPago').addEventListener('change', function () {
-const camposAdicionales = document.getElementById('camposAdicionales');
+let camposAdicionales = document.getElementById('camposAdicionales');
 camposAdicionales.innerHTML = '';
-  
- switch (this.value) {
- case 'tarjeta':
+    
+    switch (this.value) {
+    case 'tarjeta':
     camposAdicionales.innerHTML = `
-          <label for="numeroTarjeta">Número de tarjeta:</label>
-          <input type="text" id="numeroTarjeta" class="form-control" placeholder="Ingrese el número de tarjeta">
-          <label for="fechaVencimiento">Fecha de vencimiento:</label>
-          <input type="month" id="fechaVencimiento" class="form-control">
-          <label for="cvv">CVV:</label>
-          <input type="text" id="cvv" class="form-control" placeholder="Ingrese el CVV">
+            <label for="numeroTarjeta">Número de tarjeta:</label>
+            <input type="text" id="numeroTarjeta" class="form-control" placeholder="Ingrese el número de tarjeta">
+            <label for="fechaVencimiento">Fecha de vencimiento:</label>
+            <input type="month" id="fechaVencimiento" class="form-control">
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" class="form-control" placeholder="Ingrese el CVV">
         `;
     camposAdicionales.style.display = 'block';
         break;
         case 'transferencia':
     camposAdicionales.innerHTML = `
-          <label for="cuentaBancaria">Número de cuenta bancaria:</label>
-          <input type="text" id="cuentaBancaria" class="form-control" placeholder="Ingrese el número de cuenta">
+            <label for="cuentaBancaria">Número de cuenta bancaria:</label>
+            <input type="text" id="cuentaBancaria" class="form-control" placeholder="Ingrese el número de cuenta">
         `;
     camposAdicionales.style.display = 'block';
         break;
         case 'paypal':
             camposAdicionales.innerHTML = `
-              <label for="correoPaypal">Correo de PayPal:</label>
-              <input type="email" id="correoPaypal" class="form-control" placeholder="Ingrese su correo de PayPal">
-              <div style="margin-top: 10px;">
-              <a href="https://www.paypal.com/signin" target="_blank" class="btn btn-primary">Ir a PayPal</a>
-              </div>
+                <label for="correoPaypal">Correo de PayPal:</label>
+                <input type="email" id="correoPaypal" class="form-control" placeholder="Ingrese su correo de PayPal">
+                <div style="margin-top: 10px;">
+                <a href="https://www.paypal.com/signin" target="_blank" class="btn btn-primary">Ir a PayPal</a>
+                </div>
             `;
         break;
-        
-       
-    camposAdicionales.style.display = 'block';
-       break;
-       default:
+        default:
     camposAdicionales.style.display = 'none';
     }
-  });
-  
+    });
+
 // Boton finalizar compra 
 let botonFinalizarCompra = document.getElementById("boton-finalizar-compra");
 botonFinalizarCompra.addEventListener('click', () => {  
@@ -233,41 +298,23 @@ let formaDePago = document.getElementById("formaPago").value;
 let existenProductos = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
 
 if (existenProductos.length === 0) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Carrito vacío',
-        text: 'No puedes finalizar la compra sin productos en el carrito.',
-    });
+    Swal.fire('Carrito vacío', 'No puedes finalizar la compra sin productos en el carrito.', 'warning');
     return;
 }
 
 if (!departamento || !localidad || !calle || !numero || !esquina) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'No rellenaste todos los campos de tu dirección',
-        text: 'Por favor, rellene los campos vacíos',
-    });
-    return;
+    Swal.fire('Dirección incompleta', 'Por favor, rellene los campos vacíos.', 'warning');
+        return;
 }
 
 if (!formaDeEnvio) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Tipo de envío no seleccionado',
-        text: 'Por favor, selecciona un tipo de envío.',
-    });
-    return;
+    Swal.fire('Tipo de Envío no seleccionado', 'Por favor, selecciona un tipo de envío.', 'warning');
+        return;
 }
 
-let pago = document.getElementById('formaPago').value;
-
 if (!formaDePago) {
-    Swal.fire({
-        icon: 'warning',
-        title: 'Forma de pago no seleccionada',
-        text: 'Por favor, selecciona una forma de pago.',
-    });
-    return;
+    Swal.fire('Forma de pago no seleccionada', 'Por favor, selecciona una forma de pago.', 'warning');
+        return;
 }
 
 
@@ -277,47 +324,48 @@ if (formaDePago === 'tarjeta') {
     let cvv = document.getElementById('cvv')?.value;
 
     if (!numeroTarjeta || !fechaVencimiento || !cvv) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Datos de tarjeta incompletos',
-            text: 'Por favor, rellena todos los campos de tu tarjeta de credito.'
-        });
+        Swal.fire('Datos de tarjeta incompletos', 'Por favor, rellena todos los campos de tu tarjeta.', 'warning');
         return;
     }
 } else if (formaDePago === 'transferencia') {
     let cuentaBancaria = document.getElementById('cuentaBancaria')?.value;
 
     if (!cuentaBancaria) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Datos de transferencia incompletos',
-            text: 'Por favor, ingresa el número de cuenta bancaria.',
-        });
-        return;
+        Swal.fire('Datos de transferencia incompletos', 'Por favor, ingresa el número de cuenta bancaria.', 'warning');
+            return;
     }
 } else if (formaDePago === 'paypal') {
-    const correoPaypal = document.getElementById('correoPaypal')?.value;
+    let correoPaypal = document.getElementById('correoPaypal')?.value;
 
     if (!correoPaypal) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Correo de PayPal no ingresado',
-            text: 'Por favor, ingresa tu correo de PayPal.',
-        });
-        return;
+        Swal.fire('Correo PayPal no ingresado', 'Por favor, ingresa tu correo de PayPal.', 'warning');
+            return;
     }
 }
 
-Swal.fire({
-    icon: 'success',
-    title: 'Compra realizada',
-    text: '¡Gracias por tu compra, te esperamos de vuelta!',
-}).then(() => {
+Swal.fire('Compra realizada', 'Gracias por tu compra, te esperamos de vuelta!', 'success').then(() => {
     // Cuando la compra se realiza, se eliminan los productos del carrito
     localStorage.removeItem("productoEnCarrito");
     // Esperar 1 segundo y redirigir al index
     setTimeout(() => {
         window.location.href = "index.html";
     }, 1000);
+    });
 });
- });
+
+// Validar campos en tiempo real
+function validateField(field, validator) {
+    let value = field.value.trim();
+    if (!validator(value)) {
+        field.classList.add('is-invalid');
+    } else {
+        field.classList.remove('is-invalid');
+    }
+}
+
+// Ejemplo: Validación en tiempo real para campos de dirección
+document.querySelectorAll('.form-control').forEach(field => {
+    field.addEventListener('input', () => {
+        validateField(field, value => value !== ''); // Validar que el campo no esté vacío
+    });
+});

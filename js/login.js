@@ -8,8 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = 'index.html';
         }
     } else {
-        const form = document.getElementById('loginForm');
+        let form = document.getElementById('loginForm');
         if (form) {
+              // Validación en tiempo real
+            form.addEventListener('input', (event) => {
+                validateField(event.target, value => value !== '');
+            });
+
             form.addEventListener('submit', (event) => {
                 event.preventDefault();
                 let usuario = document.getElementById('inputEmail').value;
@@ -25,3 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+// Validar en tiempo real
+function validateField(field, validator) {
+    let value = field.value.trim();
+    if (!validator(value)) {
+        field.classList.add('is-invalid');
+    } else {
+        field.classList.remove('is-invalid');
+    }
+}
