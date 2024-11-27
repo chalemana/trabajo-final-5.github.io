@@ -303,3 +303,81 @@ footer p {
 .darkmode body {
   padding-top: 80px;
 }
+
+/* Estilos del popup */
+.popup-wrapper {
+  display: none; /* Se oculta inicialmente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.popup-content {
+  background-color: #FBE6DD; /* Color de fondo actualizado */
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  width: 300px;
+  position: relative;
+}
+
+.popup-img {
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 15px;
+}
+
+.popup-form {
+  margin-top: 15px;
+}
+
+.popup-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.popup-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #5a9589;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-btn:hover {
+  background-color:#2a5950;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: #333;
+  cursor: pointer;
+}
+
+.popup-close-btn:hover {
+  color: #dc3545;
+}
+
+/* Mostrar el popup */
+.popup-wrapper.show {
+  display: flex;
+  opacity: 1;
+}

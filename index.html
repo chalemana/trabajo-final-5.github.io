@@ -14,6 +14,19 @@
 </head>
 
 <body>
+<!-- Popup de Aviso -->
+<div id="popup-aviso" class="popup-wrapper">
+  <div class="popup-content">
+      <img src="img/logoGirlsDev.png" alt="Logo GirlsDev" class="popup-img">
+      <form id="popup-form" class="popup-form">
+          <input type="email" id="email-input" class="popup-input" placeholder="Introduce tu email" required>
+          <button type="submit" class="popup-btn">Obtener Descuento</button>
+      </form>
+      <button id="popup-close-btn" class="popup-close-btn">&times;</button> <!-- Cruz para cerrar -->
+  </div>
+</div>
+
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -120,6 +133,7 @@
       <p>Rediseñado por Estefi, Sara, Pri y Marti</p>
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/index.js"></script>
   <script src="js/init.js"></script>
