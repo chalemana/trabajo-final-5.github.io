@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem("productoEnCarrito", JSON.stringify(carrito));
         console.log("Producto en carrito:", product);
 
+        // Animar el badge del carrito
+        animateCartBadge(); 
+
         // Redirigir al carrito si el usuario confirma
         if (result.isConfirmed) {
             window.location.href = "cart.html";
