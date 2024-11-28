@@ -79,10 +79,24 @@
       </div>
     </div>
   </nav>
+
   <main>
-    <div class="jumbotron text-center"></div>
-    <div class="album py-5 bg-light">
-      <div class="container">
+
+    <!-- Sección de Bienvenida con fondo -->
+<section class="welcome-section" style="background-color: #ffffff; font-size: 1rem; line-height: 1.5; color:#5a9589; padding: 80px 0;">
+    <div class="container text-center">
+      <div class="welcome-box">
+        <h1 class="display-4" style="font-size: 5rem;">Bienvenidos a <strong>ESPM</strong></h1>
+      </div>
+      <p class="lead">Aquí encontrarás todo lo que buscas, al mejor precio.</p>
+    </div>
+  </section>
+
+<!-- Sección de Categorías (Cards ajustados) -->
+<section class="categories-section" style="background-color: #f0f0f0; padding: 50px 0;">
+  <div class="container text-center">
+    <h2>Categorías</h2>
+    <div class="container">
         <div class="row">
           <div class="col-md-4">
             <div class="card mb-4 shadow-sm custom-card cursor-active" id="autos">
@@ -119,7 +133,56 @@
           <a class="btn btn-light btn-lg btn-block" href="categories.html">Y mucho más!</a>
         </div>
       </div>
-    </div>
+  </div>
+</section>
+
+    <!-- Sección Quiénes Somos -->
+    <section class="about-section" style="background-color: #f9f9f9; padding: 60px 0;">
+        <div class="container">
+          <div class="row align-items-center">
+            <!-- Imagen a la izquierda -->
+            <div class="col-lg-6">
+              <img src="img/fondoIndex.png" alt="Imagen representativa de Quiénes Somos" 
+              class="img-fluid rounded shadow" 
+              style="max-width: 100%; max-height: 600px; object-fit: cover;">
+            </div>
+            <!-- Texto a la derecha -->
+            <div class="col-lg-6">
+              <h2 class="mb-4" style="font-weight: 1rem; line-height: 1.5; color: #333;">Quiénes Somos</h2>
+              <p style="font-size: 1rem; line-height: 1.5; color: #555;">
+
+    Somos cuatro chicas trabajadoras que han puesto todo su amor y esfuerzo en este proyecto. Entre risas, noches largas y un poco de estrés, hemos creado un sitio web que esperamos que les guste tanto como a nosotras nos gustó hacerlo (¡aunque algunas veces nos hizo querer arrancarnos los pelos! 😅).
+    <br>
+    <br>
+    🤔 ¿Qué es este proyecto?<br>
+    Este es el proyecto final para nuestro curso, donde aplicamos todo lo que aprendimos sobre desarrollo web. El sitio incluye:
+    <br>
+    Una página principal atractiva y moderna ✨<br>
+    Secciones con información relevante y útil 💻<br>
+    Un diseño responsivo que se adapta a cualquier dispositivo 📱<br>
+    Funcionalidades interactivas para una mejor experiencia de usuario 🎉
+    <br>
+    <br>
+    🚀 ¿Cómo lo hicimos?<br>
+    La web fue desarrollada utilizando las siguientes tecnologías:
+    <br>
+    HTML5: Para estructurar el contenido de las páginas.<br>
+    CSS3: Para el diseño y la apariencia, con un toque creativo.<br>
+    JavaScript: Para la interactividad y mejorar la experiencia del usuario.<br>
+    NodeJS, Express, MariaDB, MYSQL: para Backend<br>
+    Cada una de nosotras contribuyó con diferentes partes del proyecto, desde el diseño visual hasta la implementación de funcionalidades. 🛠️💻
+    <br>
+    <br>
+    💜 Hecho con amor (y un poco de estrés) por:<br><strong>
+    Estefi, Sara, Pri y Marti</strong>
+    </p>
+
+
+            </div>
+          </div>
+        </div>
+      </section>
+
   </main>
   <footer class="text-muted">
     <div class="container">
@@ -131,6 +194,23 @@
       </p>
       <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
       <p>Rediseñado por Estefi, Sara, Pri y Marti</p>
+<!-- El Chatbot: -->
+<div class="chat-container minimized">
+  <div class="chat-box" id="chat-box">
+    <button id="minimize-btn" aria-label="Minimizar Chat">–</button>
+    <div class="bot-message">¡Hola! mi nombre es ESPM y soy tu chatbot. <br> ¿En qué puedo ayudarte?</div>
+  </div>
+  <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
+  <button id="send-btn"><i class="bi bi-send"></i></button>
+</div>
+<!-- Icono flotante de chat -->
+<div id="chat-icon" class="chat-icon">
+  <span><i class="bi bi-chat"></i></span> <!-- Icono de chat -->
+</div>
+
+<!-- Enlazar los archivos del chatbot -->
+<link rel="stylesheet" href="css/stylesChatbot.css">
+<script src="js/chatbot.js"></script>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
