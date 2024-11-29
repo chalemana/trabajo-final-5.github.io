@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showCancelButton: true,
         confirmButtonText: "Ir al carrito",
         cancelButtonText: "Seguir comprando"
-
+        
         }).then((result) => {
         // Obtener el carrito actual del localStorage o inicializarlo vacío
         let carrito = JSON.parse(localStorage.getItem("productoEnCarrito")) || [];
