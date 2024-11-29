@@ -70,8 +70,8 @@ button#send-btn:hover {
     background-color: var(--button-hover, #2a5950);
 }
 
-/* Estilo del icono de chat flotante */
-.chat-icon {
+/* icono de chat flotante */
+#chat-icon {
     position: fixed;
     bottom: 20px;
     right: 20px;
@@ -85,7 +85,7 @@ button#send-btn:hover {
     justify-content: center;
     cursor: pointer;
     z-index: 999;
-    display: none; /* Se mostrará solo cuando el chat esté minimizado */
+    display: none; 
 }
 
 #minimize-btn {

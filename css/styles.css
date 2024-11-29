@@ -5,17 +5,16 @@ body {
   padding-top: 80px;
 }
 
-/* Estilos globales para el contenedor de login */
+/* LOGIN */
 body.login-page {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Asegura que ocupe toda la altura de la pantalla */
+  min-height: 100vh; 
   margin: 0;
-  background-color: transparent; /* Asegura que no haya fondo blanco */
+  background-color: transparent; 
 }
 
-/* Asegurarse de que el formulario ocupe el 50% del contenedor y esté centrado */
 .main-container {
   display: flex;
   justify-content: space-between;
@@ -23,7 +22,7 @@ body.login-page {
   height: 100%;
 }
 
-/* Estilo para el formulario de login */
+/* formulario de login */
 .form-login {
   flex: 1;
   display: flex;
@@ -33,7 +32,7 @@ body.login-page {
   padding: 2rem;
 }
 
-/* Estilo para los inputs y botones del formulario */
+/* inputs y botones del formulario */
 .form-login input {
   width: 90%;
   height: 40px;
@@ -48,8 +47,7 @@ body.login-page {
   cursor: pointer;
 }
 
-/* Estilo del footer */
-footer {
+footer.login-page {
   padding-top: 3rem;
   padding-bottom: 3rem;
   text-align: center;
@@ -59,12 +57,12 @@ footer {
   width: 100%;
 }
 
-footer .btn {
+footer.login-page .btn {
   background-color: #5A9589;
 }
 
 
-/* Seccion my profile*/ 
+/* Seccion MYprofile*/ 
     .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
@@ -83,11 +81,11 @@ footer .btn {
 /* INIT */
     .welcome-box {
       display: inline-block;
-      border: 1px solid  #5a9589; /* Color del borde */
-      padding: 10px 20px; /* Espaciado interno */
-      border-radius: 10px; /* Bordes redondeados */
-      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Sombreado */
-      background-color: transparent; /* Fondo transparente */
+      border: 1px solid  #5a9589; 
+      padding: 10px 20px;
+      border-radius: 10px; 
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); 
+      background-color: transparent; 
     }
     
     /* Estilo para el subtítulo (por fuera del recuadro) */
@@ -128,9 +126,12 @@ footer .btn {
         transition: transform 0.2s ease-in-out; 
       }
     
-      .categories-section .btn:hover {
+      .categories-section .btn:hover,
+      .categories-section .card:hover{
         transform: scale(1.05); 
-      }
+        transition: .15s;
+}
+    
 
 
 /* Estilos generales para las secciones */
@@ -296,7 +297,7 @@ footer p {
 }
 
 /* Formulario de inicio de sesión */
-.form-login { /*estilo para formulario login*/
+.form-login { 
   background-color:#A0D9CE;
   text-align: center;
   width: 100%;
@@ -313,13 +314,13 @@ footer p {
   box-shadow: 10px 10px 10px #F2F2F2;
   }
   
-  .form-login input{ /*estilo para input login*/
+  .form-login input{ 
     width: 90%;
     height: 30px;
     margin: .9rem
   }
   
-  .form-login button{ /*estilo para boton ingresar en login*/
+  .form-login button{ 
     padding: 1em 1em;
     border: none;
     border-radius: 20px;
@@ -328,7 +329,7 @@ footer p {
     color:#F2F2F2;
   }
   
-  .img-login { /*estilo imagen titulo login*/
+  .img-login { 
     display: block;
     margin-left: auto;
     margin-right: auto;
